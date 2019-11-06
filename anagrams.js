@@ -3,7 +3,7 @@ Task: check is the word is anagram to another word
  */
 
 const wordToObj = word => {
-    return word.split('').reduce((obj, char) => ({...obj, [char]: obj[char] + 1 || 1}), {});
+    return [...word].reduce((obj, char) => ({...obj, [char]: obj[char] + 1 || 1}), {});
 };
 
 const isAnagram = (word1, word2) => {

@@ -2,7 +2,7 @@ const tests = ["Eva, can I see bees in a cave?", "QWErtyTRewq", "Yandex"];
 
 const isPalindromeRegExp = str => {
     const replaced = str.replace(/[^\w]+/g, '').toLowerCase();
-    return replaced === replaced.split('').reverse().join('')
+    return replaced === [...replaced].reverse().join('')
 };
 
 const isPalindromeIterative = str => {
