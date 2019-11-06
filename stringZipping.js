@@ -6,16 +6,15 @@ const zipString = str => {
     let zipped = '',
         current = str[0],
         count = 0;
-    for (const index in str.split('')) {
-        const char = str[index];
-        if (char === current)
-            count++;
-        else {
+    [...str].forEach(char => {
+        if (char !== current) {
             zipped += count > 1 ? `${current}${count}` : current;
             current = char;
             count = 1;
+        } else {
+            count++;
         }
-    }
+    });
 
     return count > 1 ? `${zipped}${current}${count}` : zipped + current;
 };
