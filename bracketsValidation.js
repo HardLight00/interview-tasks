@@ -18,7 +18,7 @@ const validationRegExp = sequence => {
 
 const validationStack = sequence => {
     const stack = [];
-    for (const char of sequence){
+    for (const char of sequence) {
         switch (char) {
             case '(':
             case '[':
@@ -44,7 +44,25 @@ const validationStack = sequence => {
     return stack.length === 0;
 };
 
+const validationStackWithDict = sequence => {
+    const stack = [];
+    const validPairs = {
+        ')': '(',
+        ']': '[',
+        '}': '{',
+    };
+    for (const char of sequence) {
+        const pair = validPairs[char];
+        if (!pair)
+            stack.push(char);
+        else if (stack.pop() !== pair)
+            return false;
+    }
+    return stack.length === 0;
+};
+
 const runTests = (validation, tests) => tests.reduce((result, test) => (`${result}\n${test}: ${validation(test)}`), '');
 
 console.log(runTests(validationRegExp, tests));
 console.log(runTests(validationStack, tests));
+console.log(runTests(validationStackWithDict, tests));
