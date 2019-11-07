@@ -1,13 +1,14 @@
 const deepCopy = obj => {
+    if (obj instanceof Function)
+        return () => obj.apply(this, arguments);
+
+    if (obj instanceof Array)
+        return [...obj].map(item => deepCopy(item));
+
     if (typeof obj !== 'object' || !obj)
         return obj;
 
-    return Object.entries(obj).reduce((accum, [key, value]) => {
-        if (value instanceof Array)
-            return {...accum, [key]: value.slice().map(item => deepCopy(item))};
-
-        return {...accum, [key]: deepCopy(value)};
-    }, {});
+    return Object.entries(obj).reduce((accum, [key, value]) => ({...accum, [key]: deepCopy(value)}), {});
 };
 
 const obj = {
@@ -45,3 +46,4 @@ copied.m = false;
 console.log(obj);
 console.log(deepCopy(obj));
 console.log(copied);
+console.log(obj.f === deepCopy(obj).f);
