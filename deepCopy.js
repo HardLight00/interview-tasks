@@ -1,6 +1,6 @@
 const deepCopy = obj => {
     if (obj instanceof Function)
-        return (ctx => (...args) => obj.apply(ctx, args))(this);
+        return (...args) => obj.apply(this, args);
 
     if (obj instanceof Array)
         return [...obj].map(item => deepCopy(item));
